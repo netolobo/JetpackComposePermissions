@@ -21,6 +21,7 @@ import com.n3t0l0b0.blogspot.mpc.view.jetpackcomposepermissions.ui.theme.Jetpack
 @Composable
 fun PermissionDialog(
     permissionTextProvider: PermissionTextProvider,
+    dialogTitle: String,
     isPermanentlyDeclined: Boolean,
     onDismiss: () -> Unit,
     onOkClick: () -> Unit,
@@ -37,7 +38,7 @@ fun PermissionDialog(
                 modifier = Modifier.padding(16.dp)
             ) {
                 Text(
-                    text = "Permission required",
+                    text = dialogTitle,
                     fontWeight = FontWeight.Bold
                 )
 
@@ -56,7 +57,7 @@ fun PermissionDialog(
                         onOkClick()
                     }
                 }) {
-                    Text(text = if (isPermanentlyDeclined) "Go to settings" else "OK")
+                    Text(text = permissionTextProvider.getButtonLabel(isPermanentlyDeclined))
                 }
 
 
@@ -68,7 +69,11 @@ fun PermissionDialog(
 
 interface PermissionTextProvider {
     fun getDescription(isPermanentlyDeclined: Boolean): String
+
+    fun getButtonLabel(isPermanentlyDeclined: Boolean): String
 }
+
+//Text(text = if (isPermanentlyDeclined) "Go to settings" else "OK")
 
 class StoragePermissionTextProvider : PermissionTextProvider {
     override fun getDescription(isPermanentlyDeclined: Boolean): String {
@@ -77,6 +82,10 @@ class StoragePermissionTextProvider : PermissionTextProvider {
         } else {
             "This app need to access to you phone gallery so it can save the images you create"
         }
+    }
+
+    override fun getButtonLabel(isPermanentlyDeclined: Boolean): String {
+        return if (isPermanentlyDeclined) "Go to settings" else "OK"
     }
 }
 
@@ -88,6 +97,7 @@ fun PermissionDialogPreview() {
     JetpackComposePermissionsTheme {
         PermissionDialog(
             permissionTextProvider = StoragePermissionTextProvider(),
+            dialogTitle = "Request permission",
             isPermanentlyDeclined = false,
             onDismiss = { /*TODO*/ },
             onOkClick = { /*TODO*/ }) {

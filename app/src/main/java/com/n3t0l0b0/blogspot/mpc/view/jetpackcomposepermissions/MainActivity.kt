@@ -59,8 +59,6 @@ class MainActivity : ComponentActivity() {
                             } else {
                                 storagePermissionResultLauncher.launch(permissionRequired)
                             }
-
-
                         }) {
                             Text(text = "Request one permission")
                         }
@@ -70,6 +68,7 @@ class MainActivity : ComponentActivity() {
                 if (showPermissionDialog) {
                     PermissionDialog(StoragePermissionTextProvider(),
                         isPermanentlyDeclined = !shouldShowRequestPermissionRationale(permissionRequired),
+                        dialogTitle = "Permission required",
                         onDismiss = { showPermissionDialog = false },
                         onOkClick = {
                             storagePermissionResultLauncher.launch(permissionRequired)
