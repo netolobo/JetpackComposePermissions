@@ -27,7 +27,7 @@ import com.n3t0l0b0.blogspot.mpc.view.jetpackcomposepermissions.ui.theme.Jetpack
 
 class MainActivity : ComponentActivity() {
 
-    private val permissionRequired = Manifest.permission.WRITE_EXTERNAL_STORAGE
+    private val permissionRequired = Manifest.permission.CAMERA
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
