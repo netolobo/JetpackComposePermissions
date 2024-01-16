@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -37,6 +38,11 @@ class MainActivity : ComponentActivity() {
                 val storagePermissionResultLauncher = rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.RequestPermission(),
                     onResult = { isGranted ->
+                        if (isGranted) {
+                            Toast
+                                .makeText(this, "Permission granted", Toast.LENGTH_SHORT)
+                                .show()
+                        }
                         showPermissionDialog = !isGranted
                     }
                 )
