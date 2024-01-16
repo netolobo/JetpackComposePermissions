@@ -1,7 +1,6 @@
 package com.n3t0l0b0.blogspot.mpc.view.jetpackcomposepermissions
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -23,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.n3t0l0b0.blogspot.mpc.view.jetpackcomposepermissions.ui.theme.JetpackComposePermissionsTheme
 
 class MainActivity : ComponentActivity() {
@@ -34,7 +32,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             JetpackComposePermissionsTheme {
-
                 var showPermissionDialog by remember { mutableStateOf(false) }
 
                 val storagePermissionResultLauncher = rememberLauncherForActivityResult(
@@ -54,21 +51,16 @@ class MainActivity : ComponentActivity() {
 
                     ) {
                         Button(onClick = {
-                            if (shouldShowRequestPermissionRationale(permissionRequired)) {
-                                showPermissionDialog = true
-                            } else {
-                                storagePermissionResultLauncher.launch(permissionRequired)
-                            }
+                            storagePermissionResultLauncher.launch(permissionRequired)
                         }) {
-                            Text(text = "Request one permission")
+                            Text(text = "Request permission")
                         }
                     }
                 }
 
                 if (showPermissionDialog) {
-                    PermissionDialog(StoragePermissionTextProvider(),
+                    PermissionDialog(StoragePermissionDialogTextProvider(),
                         isPermanentlyDeclined = !shouldShowRequestPermissionRationale(permissionRequired),
-                        dialogTitle = "Permission required",
                         onDismiss = { showPermissionDialog = false },
                         onOkClick = {
                             storagePermissionResultLauncher.launch(permissionRequired)
